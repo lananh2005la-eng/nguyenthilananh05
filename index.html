@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loran - Mỹ Phẩm Cao Cấp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html { scroll-behavior: smooth; }
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-count {
+            position: absolute; top: -8px; right: -10px;
+            background: #8B0000; color: white; font-size: 10px;
+            padding: 2px 6px; border-radius: 50%; font-weight: bold;
+        }
+        /* CSS MỚI CHO MODAL ĐĂNG NHẬP */
+        .modal { display: none; position: fixed; z-index: 9999; right: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        .modal-content { background: white; width: 350px; height: 100%; float: right; padding: 30px; position: relative; animation: slideIn 0.3s; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .close { position: absolute; left: -40px; top: 10px; font-size: 30px; color: white; cursor: pointer; }
+        .modal-content h2 { margin-bottom: 20px; color: #333; }
+        .modal-content input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; box-sizing: border-box; }
+        .btn-login { width: 100%; background: #8B0000; color: white; padding: 12px; border: none; cursor: pointer; font-weight: bold; margin: 20px 0; }
+        .social-login button { width: 100%; padding: 10px; margin-bottom: 10px; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-fb { background: #3b5998; } .btn-google { background: #db4437; }
+        .remember-me { font-size: 13px; color: #666; }
+        .create-acc { text-align: center; font-size: 14px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html"><img src="img/logo.png" alt="LORAN"></a> 
+            </div>
+            
+            <div class="search-bar" style="position: relative;">
+                <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." oninput="handleSearch()">
+                <button><i class="fa fa-search"></i></button>
+                <div id="searchSuggestions" style="display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #fff; border: 1px solid #ddd; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 0 0 5px 5px; max-height: 300px; overflow-y: auto;">
+                </div>
+            </div>
+
+            <div class="header-info">
+                <span>Hotline: 0963128976</span>
+                <i class="fa-regular fa-user" onclick="openLogin()" style="cursor: pointer; margin: 0 10px; font-size: 18px;"></i>
+                
+                <div class="cart-icon" onclick="location.href='cart.html'" style="display: inline-block;">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cartCount" style="position: absolute; top: -10px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-list">
+                <li><a href="index.html"><i class="fa fa-bars"></i> TẤT CẢ</a></li>
+                <li><a href="#combo">COMBO SIÊU HỜI</a></li>
+                <li><a href="#skincare">CHĂM SÓC DA</a></li>
+                <li><a href="#makeup">TRANG ĐIỂM</a></li> 
+              <li id="adminMenuItem" style="display: none;">
+    <a href="admin.html" style="background: #28a745; color: white; padding: 5px 10px; border-radius: 5px;">
+        <i class="fa fa-chart-line"></i> DOANH SỐ
+    </a>
+</li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="combo" class="category-section">
+            <div class="deal-header">
+                <h2 class="flash-title">COMBO SIÊU HỜI <i class="fa fa-gift"></i></h2>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <a href="detail.html?img=img/combo1.jpg&title=Combo Dưỡng Trắng Toàn Diện Cocoon&price=550000">
+                        <div class="badge-ship">FREESHIP TQ</div>
+                        <img src="img/combo1.jpg" alt="Combo 1">
+                        <h4>Combo Dưỡng Trắng Toàn Diện Cocoon</h4>
+                    </a>
+                    <p class="price">550,000đ <del>750,000đ</del></p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 50%;"></div>
+                        <span>ĐÃ BÁN 50%</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <a href="detail.html?img=img/combo2.jpg&title=Set Quà Tặng 8/3 Ý Nghĩa&price=890000">
+                        <div class="badge-ship">HOT</div>
+                        <img src="img/combo2.jpg" alt="Combo 2">
+                        <h4>Set Quà Tặng 8/3 Ý Nghĩa</h4>
+                    </a>
+                    <p class="price">890,000đ <del>1,100,000đ</del></p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 20%;"></div>
+                        <span>ĐÃ BÁN 20%</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <a href="detail.html?img=img/combo3.jpg&title=Hộp quà tình yêu&price=229000">
+                        <div class="badge-ship">HOT</div>
+                        <img src="img/combo3.jpg" alt="Combo 3">
+                        <h4>Hộp quà tình yêu</h4>
+                    </a>
+                    <p class="price">229,000đ <del>669,000đ</del></p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 20%;"></div>
+                        <span>ĐÃ BÁN 20%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skincare" class="category-section" style="margin-top: 50px;">
+            <div class="deal-header">
+                <h2 class="flash-title" style="color: #2196f3;">CHĂM SÓC DA <i class="fa fa-leaf"></i></h2>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <a href="detail.html?img=img/skin1.jpg&title=Serum Torriden&price=420000">
+                        <img src="img/skin1.jpg" alt="Serum">
+                        <h4>Serum Torriden</h4>
+                    </a>
+                    <p class="price">420,000đ</p>
+                    <button class="btn-buy" onclick="location.href='detail.html?img=img/skin1.jpg&title=Serum Torriden&price=420000'">MUA NGAY</button>
+                </div>
+                <div class="product-card">
+                    <a href="detail.html?img=img/skin2.jpg&title=Kem Dưỡng Ẩm Torriden&price=320000">
+                        <img src="img/skin2.jpg" alt="Kem dưỡng">
+                        <h4>Kem Dưỡng Ẩm Torriden</h4>
+                    </a>
+                    <p class="price">320,000đ</p>
+                    <button class="btn-buy" onclick="location.href='detail.html?img=img/skin2.jpg&title=Kem Dưỡng Ẩm Torriden&price=320000'">MUA NGAY</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="makeup" class="category-section" style="margin-top: 50px;">
+            <div class="deal-header">
+                <h2 class="flash-title" style="color: #e91e63;">TRANG ĐIỂM <i class="fa fa-paint-brush"></i></h2>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <a href="detail.html?img=img/makeup1.jpg&title=Son Tint Lì Romand Juicy Lasting Tint #06 Figfig&price=189000">
+                        <div class="badge-ship">NEW</div>
+                        <img src="img/makeup1.jpg" alt="Son Romand"> 
+                        <h4>Son Tint Lì Romand Juicy Lasting Tint #06 Figfig</h4>
+                    </a>
+                    <p class="price">189,000đ <del>250,000đ</del></p>
+                    <button class="btn-buy" onclick="location.href='detail.html?img=img/makeup1.jpg&title=Son Tint Lì Romand Juicy Lasting Tint #06 Figfig&price=189000'">MUA NGAY</button>
+                </div>
+                <div class="product-card">
+                    <a href="detail.html?img=img/makeup2.jpg&title=Bảng Phấn Mắt 3CE Overtake&price=650000">
+                        <img src="img/makeup2.jpg" alt="Phấn mắt"> 
+                        <h4>Bảng Phấn Mắt 9 Ô 3CE Multi Eye Color Palette #Overtake</h4>
+                    </a>
+                    <p class="price">650,000đ</p>
+                    <button class="btn-buy" onclick="location.href='detail.html?img=img/makeup2.jpg&title=Bảng Phấn Mắt 3CE Overtake&price=650000'">MUA NGAY</button>
+                </div>
+                <div class="product-card">
+                    <a href="detail.html?img=img/makeup3.jpg&title=Kem Nền Fit Me Maybelline&price=215000">
+                        <div class="badge-ship">HOT</div>
+                        <img src="img/makeup3.jpg" alt="Kem nền"> 
+                        <h4>Kem Nền Fit Me Maybelline New York Kiềm Dầu</h4>
+                    </a>
+                    <p class="price">215,000đ <del>270,000đ</del></p>
+                    <button class="btn-buy" onclick="location.href='detail.html?img=img/makeup3.jpg&title=Kem Nền Fit Me Maybelline&price=215000'">MUA NGAY</button>
+                </div>
+                <div class="product-card">
+                    <a href="detail.html?img=img/makeup4.jpg&title=Mascara Maybelline Lash Sensational&price=195000">
+                        <img src="img/makeup4.jpg" alt="Mascara"> 
+                        <h4>Mascara Maybelline Lash Sensational Sky High</h4>
+                    </a>
+                    <p class="price">195,000đ</p>
+                    <button class="btn-buy" onclick="location.href='detail.html?img=img/makeup4.jpg&title=Mascara Maybelline Lash Sensational&price=195000'">MUA NGAY</button>
+                </div>
+                <div class="product-card">
+                    <a href="detail.html?img=img/makeup5.jpg&title=Bút Kẻ Mắt Nước Kiss Me&price=220000">
+                        <img src="img/makeup5.jpg" alt="Kẻ mắt"> 
+                        <h4>Bút Kẻ Mắt Nước Kiss Me Heroine Make Smooth Liquid Liner</h4>
+                    </a>
+                    <p class="price">220,000đ</p>
+                    <button class="btn-buy" onclick="location.href='detail.html?img=img/makeup5.jpg&title=Bút Kẻ Mắt Nước Kiss Me&price=220000'">MUA NGAY</button>
+                </div>
+                <div class="product-card">
+                    <a href="detail.html?img=img/makeup6.jpg&title=Phấn Má Hồng Canmake&price=280000">
+                        <img src="img/makeup6.jpg" alt="Phấn má"> 
+                        <h4>Phấn Má Hồng Canmake Glow Fleur Cheeks</h4>
+                    </a>
+                    <p class="price">280,000đ</p>
+                    <button class="btn-buy" onclick="location.href='detail.html?img=img/makeup6.jpg&title=Phấn Má Hồng Canmake&price=280000'">MUA NGAY</button>
+                </div>
+            </div> 
+        </section>
+    </main>
+
+    <footer style="background: #333; color: #fff; padding: 40px 0; margin-top: 50px; text-align: center;">
+        <p>&copy; 2026 LORAN COSMETICS - Chất lượng tạo nên thương hiệu</p>
+    </footer>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <h2>ĐĂNG NHẬP</h2>
+            <input type="text" id="username" placeholder="Email hoặc số điện thoại">
+            <input type="password" id="password" placeholder="Mật khẩu">
+            <div class="remember-me">
+                <input type="checkbox" id="remember"> <label for="remember">Ghi nhớ đăng nhập</label>
+            </div>
+            <button class="btn-login" onclick="checkLogin()">Đăng nhập</button>
+            <div class="social-login">
+                <button class="btn-fb"><i class="fab fa-facebook-f"></i> Đăng nhập Facebook</button>
+                <button class="btn-google"><i class="fab fa-google"></i> Đăng nhập Google</button>
+            </div>
+            <p class="create-acc">Chưa có tài khoản? <a href="#">Đăng ký ngay</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Thêm đoạn này vào ngay đầu thẻ <script> của index.html
+window.onload = function() {
+    updateCartBadge(); // Cập nhật giỏ hàng
+    
+    // Kiểm tra nếu người dùng hiện tại là admin thì hiện nút Doanh số ngay lập tức
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser === 'admin') {
+        document.getElementById('adminMenuItem').style.display = 'block';
+    }
+};
+
+// Cập nhật lại hàm checkLogin để lưu trạng thái
+function checkLogin() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    const adminMenu = document.getElementById('adminMenuItem');
+
+    if (user === 'admin' && pass === '123') {
+        alert('Chào Admin! Quyền quản trị đã được mở.');
+        localStorage.setItem('currentUser', 'admin'); // Lưu lại là admin
+        adminMenu.style.display = 'block'; 
+        closeLogin();
+    } else if (user !== '' && pass !== '') {
+        alert('Đăng nhập thành công!');
+        localStorage.setItem('currentUser', user); // Lưu tên khách hàng
+        adminMenu.style.display = 'none';
+        closeLogin();
+    } else {
+        alert('Vui lòng nhập tài khoản!');
+    }
+}
+
+// Thêm hàm Đăng xuất (Logout)
+function logout() {
+    localStorage.removeItem('currentUser');
+    alert('Đã đăng xuất!');
+    location.reload(); // Load lại trang để ẩn nút Doanh số
+}
+       // 1. CẬP NHẬT GIỎ HÀNG
+function updateCartBadge() {
+    let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+    let total = cart.reduce((sum, item) => sum + (Number(item.qty) || 0), 0);
+    const badge = document.getElementById('cartCount');
+    if (badge) badge.innerText = total;
+}
+window.onload = updateCartBadge;
+
+// 2. LOGIC ĐĂNG NHẬP (ĐÃ THÊM LẠI HÀM MỞ/ĐÓNG)
+function openLogin() { 
+    document.getElementById('loginModal').style.display = 'block'; 
+}
+
+function closeLogin() { 
+    document.getElementById('loginModal').style.display = 'none'; 
+}
+
+function checkLogin() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    const adminMenu = document.getElementById('adminMenuItem');
+
+    if (user === 'admin' && pass === '123') {
+        alert('Chào Admin! Quyền quản trị đã được mở.');
+        adminMenu.style.display = 'block'; // Hiện nút Doanh số
+        closeLogin();
+    } else if (user !== '' && pass !== '') {
+        alert('Đăng nhập thành công!');
+        adminMenu.style.display = 'none'; // Khách hàng thì ẩn nút Doanh số
+        localStorage.setItem('currentUser', user);
+        closeLogin();
+    } else {
+        alert('Vui lòng nhập tài khoản!');
+    }
+}
+
+// 3. LOGIC TÌM KIẾM (GIỮ NGUYÊN)
+const products = [
+    { title: "Combo Dưỡng Trắng Toàn Diện Cocoon", price: 550000, img: "img/combo1.jpg" },
+    { title: "Serum Torriden", price: 420000, img: "img/skin1.jpg" },
+    { title: "Kem Dưỡng Ẩm Torriden", price: 320000, img: "img/skin2.jpg" },
+    { title: "Son Tint Lì Romand Juicy Lasting Tint", price: 189000, img: "img/makeup1.jpg" },
+    { title: "Bảng Phấn Mắt 3CE Overtake", price: 650000, img: "img/makeup2.jpg" }
+];
+
+function handleSearch() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const suggestionBox = document.getElementById('searchSuggestions');
+    if (input.length < 1) { suggestionBox.style.display = 'none'; return; }
+
+    const matches = products.filter(p => p.title.toLowerCase().includes(input));
+    if (matches.length > 0) {
+        suggestionBox.style.display = 'block';
+        suggestionBox.innerHTML = matches.map(p => `
+            <div onclick="goToDetail('${p.title}', '${p.img}', ${p.price})" style="display: flex; align-items: center; gap: 10px; padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;">
+                <img src="${p.img}" style="width: 40px; height: 40px; object-fit: cover;">
+                <div>
+                    <div style="font-size: 13px; font-weight: bold; color: #333;">${p.title}</div>
+                    <div style="color: #8B0000; font-size: 12px; font-weight: bold;">${p.price.toLocaleString()}đ</div>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        suggestionBox.style.display = 'block';
+        suggestionBox.innerHTML = '<p style="padding: 10px; color: #999; font-size: 13px;">Không tìm thấy sản phẩm...</p>';
+    }
+}
+
+function goToDetail(title, img, price) {
+    window.location.href = `detail.html?title=${encodeURIComponent(title)}&img=${encodeURIComponent(img)}&price=${price}`;
+}
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-bar')) { document.getElementById('searchSuggestions').style.display = 'none'; }
+});
+    </script>
+</body>
+</html>

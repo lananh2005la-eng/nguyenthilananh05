@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm - LORAN</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* GIỮ NGUYÊN CSS CŨ CỦA BẠN TRÊN ĐÂY */
+        .badge-freeship { background: #0046ab; color: white; padding: 2px 8px; font-size: 11px; border-radius: 10px; display: inline-block; margin-bottom: 10px; }
+        .note-box { border: 1px dashed #ff9800; padding: 15px; background: #fff9f1; color: #d35400; font-size: 13px; margin: 15px 0; line-height: 1.6; }
+        .price-row { display: flex; align-items: center; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 5px; }
+        .voucher-item { border: 1px dashed #2196f3; color: #2196f3; padding: 5px 15px; cursor: pointer; background: #f0f7ff; }
+        
+        .action-group { display: flex; gap: 10px; margin-top: 25px; }
+        .btn-red { background: #8B0000; color: white; border: none; flex: 2; padding: 15px; font-weight: bold; cursor: pointer; }
+        .btn-outline { background: white; color: #8B0000; border: 1px solid #8B0000; flex: 1.5; padding: 15px; font-weight: bold; cursor: pointer; }
+        .btn-location { background: #8B0000; color: white; border: none; flex: 2; padding: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+        .rating-section, .suggested-section { background: #fff; padding: 20px; margin-top: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .stars-orange { color: #ff9800; }
+        
+        #notification { display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.85); color: white; padding: 30px 60px; border-radius: 10px; z-index: 9999; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo"><a href="index.html"><img src="img/logo.png" alt="LORAN"></a></div>
+            <div class="search-bar"><input type="text" placeholder="Tìm sản phẩm..."><button><i class="fa fa-search"></i></button></div>
+            <div class="header-info">
+                <span>Hotline: 1900 636 510</span>
+               <div class="cart-icon" onclick="location.href='cart.html'" style="cursor: pointer; position: relative;">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cartCount" style="position: absolute; top: -10px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="product-detail-container" style="display: flex; gap: 30px; margin-top: 20px; background: #fff; padding: 20px;">
+            
+            <div style="flex: 1;">
+                <div class="main-img" style="border: 1px solid #eee; margin-bottom: 15px;">
+                    <img src="" id="productMainImg" style="width: 100%;" alt="Sản phẩm">
+                </div>
+                <div class="thumb-list" id="thumbList" style="display: flex; gap: 10px;">
+                </div>
+            </div>
+
+            <div style="flex: 1.2;">
+                <span class="badge-freeship">FREESHIP TQ</span>
+                <h1 id="productTitleDisplay" style="font-size: 20px; margin: 10px 0;">Tên sản phẩm</h1>
+                
+                <div style="margin-bottom: 10px; color: #666; font-size: 14px;">
+                    <span class="stars-orange">★★★★★</span> (1 đánh giá) | Đã bán 18
+                </div>
+
+                <div class="note-box">
+                    LƯU Ý: HỘP QUÀ MÀU NGẪU NHIÊN<br>
+                    LƯU Ý: BOX QUÀ CHỈ ÁP DỤNG GIAO HỎA TỐC KHU VỰC NỘI THÀNH TPHCM...
+                </div>
+
+                <div class="price-row">
+                    <span id="productPriceDisplay" style="color: #8B0000; font-size: 28px; font-weight: bold;">399,000đ</span>
+                    <span style="text-decoration: line-through; color: #999;">599,000đ</span>
+                    <span style="background: #ff9800; color: white; padding: 2px 5px; font-size: 12px; border-radius: 3px;">-33%</span>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <p style="font-size: 14px; margin-bottom: 10px;">Mã giảm giá:</p>
+                    <div style="display: flex; gap: 10px;">
+                        <span class="voucher-item">Giảm 15%</span>
+                        <span class="voucher-item">Giảm 15%</span>
+                        <span class="voucher-item">Giảm 15%</span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <p style="font-size: 14px;">Số lượng:</p>
+                    <div style="display: flex; margin-top: 10px; align-items: center; border: 1px solid #ddd; width: fit-content;">
+                        <button onclick="changeQty(-1)" style="border: none; background: #f5f5f5; width: 35px; height: 35px; cursor: pointer;">-</button>
+                        <input type="text" id="qty" value="1" style="width: 45px; text-align: center; border: none;" readonly>
+                        <button onclick="changeQty(1)" style="border: none; background: #f5f5f5; width: 35px; height: 35px; cursor: pointer;">+</button>
+                    </div>
+                </div>
+
+                <div class="action-group">
+                    <button class="btn-buy-now" onclick="buyNow()">MUA NGAY ONLINE</button>
+                    <button class="btn-outline" onclick="addToCart()">THÊM VÀO GIỎ</button>
+                    <button class="btn-location"><i class="fa fa-map-marker-alt"></i> CHI NHÁNH CÒN HÀNG</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="rating-section">
+            <h3 style="border-left: 4px solid #8B0000; padding-left: 10px;">ĐÁNH GIÁ SẢN PHẨM</h3>
+            <div style="display: flex; align-items: center; gap: 40px; margin: 20px 0; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                <div style="text-align: center;">
+                    <h2 style="font-size: 45px; color: #8B0000; margin: 0;">5.0</h2>
+                    <div class="stars-orange">★★★★★</div>
+                    <button onclick="toggleForm()" style="margin-top: 10px; cursor: pointer; background: #8B0000; color: #fff; border: none; padding: 5px 15px;">Viết đánh giá</button>
+                </div>
+                <div id="reviewForm" style="display: none; flex-grow: 1; background: #f9f9f9; padding: 15px; border-radius: 5px;">
+                    <input type="text" id="revName" placeholder="Tên của bạn" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                    <textarea id="revContent" placeholder="Nội dung đánh giá" style="width: 100%; padding: 8px; margin-bottom: 10px;"></textarea>
+                    <button onclick="submitReview()" style="background: #4caf50; color: white; border: none; padding: 8px 20px; cursor: pointer;">Gửi ngay</button>
+                </div>
+            </div>
+            <div id="reviewList">
+                <div style="padding: 10px 0; border-bottom: 1px solid #f5f5f5;">
+                    <div style="font-weight: bold;">Nguyễn Hoàng <span style="font-weight: normal; color: #999; font-size: 12px; margin-left: 10px;">06/03/2026</span></div>
+                    <div class="stars-orange">★★★★★</div>
+                    <p style="margin-top: 5px;">Sản phẩm tốt!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="suggested-section">
+            <h3 style="border-left: 4px solid #8B0000; padding-left: 10px; margin-bottom: 20px;">ĐỀ XUẤT CHO BẠN</h3>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+                <div style="border: 1px solid #eee; padding: 10px; text-align: center;">
+                    <img src="img/makeup1.jpg" style="width: 100%;">
+                    <p style="font-size: 13px; margin: 10px 0;">Sản phẩm liên quan 1</p>
+                    <span style="color: #8B0000; font-weight: bold;">189,000đ</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="notification"><i class="fa fa-check-circle" style="font-size: 40px; color: #4caf50;"></i><p>Đã thêm vào giỏ hàng!</p></div>
+
+    <script>
+        // 1. KHI TRANG LOAD XONG: Đọc dữ liệu từ đường link
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title');
+            const img = params.get('img');
+            const price = params.get('price');
+
+            if (title) document.getElementById('productTitleDisplay').innerText = title;
+            if (img) document.getElementById('productMainImg').src = img;
+            if (price) {
+                // Hiển thị giá đã định dạng hàng nghìn
+                document.getElementById('productPriceDisplay').innerText = Number(price).toLocaleString() + "đ";
+                // Lưu giá gốc là con số nguyên vào một thuộc tính ẩn (data-) để tính toán sau này
+                document.getElementById('productPriceDisplay').dataset.rawPrice = price;
+            }
+            
+            updateBadge(); // Cập nhật số trên giỏ hàng
+        };
+
+        // 2. CHỨC NĂNG TĂNG GIẢM SỐ LƯỢNG (Giữ nguyên của bạn)
+        function changeQty(n) {
+            let q = document.getElementById('qty');
+            if (!q) return;
+            let v = parseInt(q.value) + n;
+            if (v > 0) q.value = v;
+        }
+
+        // 3. CHỨC NĂNG: MUA NGAY ONLINE (Tạo phiếu riêng, nhảy sang thanh toán)
+        function buyNow() {
+    // 1. Lấy thông tin sản phẩm từ URL (hoặc từ giao diện trang detail)
+    const urlParams = new URLSearchParams(window.location.search);
+    const title = urlParams.get('title');
+    const price = urlParams.get('price');
+    const img = urlParams.get('img');
+    const quantity = document.querySelector('input[type="number"]')?.value || 1;
+
+    if (!title || !price) {
+        alert("Không tìm thấy thông tin sản phẩm!");
+        return;
+    }
+
+    // 2. Tạo đối tượng sản phẩm
+    const product = {
+        title: title,
+        price: parseInt(price),
+        img: img,
+        qty: parseInt(quantity)
+    };
+
+    // 3. Lưu duy nhất sản phẩm này vào một biến tạm hoặc đẩy vào giỏ hàng
+    // Ở đây mình sẽ đẩy vào giỏ hàng 'myCart' để trang checkout.html nhận diện được
+    let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+    
+    // Kiểm tra xem sản phẩm đã có trong giỏ chưa để tránh trùng lặp
+    const existingIndex = cart.findIndex(item => item.title === title);
+    if (existingIndex > -1) {
+        cart[existingIndex].qty += parseInt(quantity);
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem('myCart', JSON.stringify(cart));
+
+    // 4. Chuyển hướng thẳng sang trang thanh toán
+    window.location.href = 'checkout.html';
+}
+        // 4. CHỨC NĂNG: THÊM VÀO GIỎ HÀNG (Cất vào kho chờ có tiền)
+        function addToCart() {
+            let title = document.getElementById('productTitleDisplay').innerText;
+            let img = document.getElementById('productMainImg').src;
+            let qty = parseInt(document.getElementById('qty').value);
+            let price = Number(document.getElementById('productPriceDisplay').dataset.rawPrice) || 399000;
+
+            // Đẩy đồ vào giỏ chung
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            let found = cart.find(i => i.title === title);
+            if (found) {
+                found.qty += qty;
+            } else {
+                cart.push({ title, img, price, qty });
+            }
+
+            localStorage.setItem('myCart', JSON.stringify(cart));
+            updateBadge();
+            alert("Đã thêm vào giỏ hàng thành công! Bạn có thể vào Giỏ Hàng để mua sau.");
+        }
+
+        // 5. CẬP NHẬT SỐ LƯỢNG TRÊN ICON GIỎ HÀNG
+        function updateBadge() {
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            let totalQty = cart.reduce((s, i) => s + (Number(i.qty) || 0), 0);
+            let badge = document.getElementById('cartCount');
+            if (badge) badge.innerText = totalQty;
+        }
+        
+        // GIỮ NGUYÊN CÁC CHỨC NĂNG ĐÁNH GIÁ CỦA BẠN
+        function toggleForm() { document.getElementById('reviewForm').style.display = 'block'; }
+        function submitReview() { alert('Gửi đánh giá thành công!'); document.getElementById('reviewForm').style.display = 'none'; }
+    </script>
+</body>
+</html>
